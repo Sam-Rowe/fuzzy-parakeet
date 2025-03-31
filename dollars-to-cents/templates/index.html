@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dollars to Cents</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        .coin-image {
+            width: 50px;
+            height: 50px;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Dollars to Cents Converter</h1>
+        <form method="POST" class="mt-4">
+            <div class="mb-3">
+                <label for="dollars" class="form-label">Enter dollar amount:</label>
+                <input type="text" class="form-control" id="dollars" name="dollars" placeholder="e.g., 2.75">
+            </div>
+            <button type="submit" class="btn btn-primary">Convert</button>
+        </form>
+        {% if coins %}
+        <div class="mt-4">
+            <h2>Result:</h2>
+            {% if coins == 'Invalid input. Please enter a valid dollar amount.' %}
+                <p class="text-danger">{{ coins }}</p>
+            {% else %}
+                <div>
+                    {% for coin, count in coins.items() %}
+                        <div>
+                            <strong>{{ count }} {{ coin }}</strong>
+                            <div>
+                                {% for _ in range(count) %}
+                                    <img src="/static/images/{{ coin }}.{{ 'png' if coin == 'dimes' else 'jpeg' if coin == 'pennies' else 'jpg' if coin in ['nickels', 'quarters'] else 'png' }}" alt="{{ coin }}" class="coin-image">
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
